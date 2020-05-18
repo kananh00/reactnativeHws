@@ -5,26 +5,31 @@ import {
     AsyncStorage, 
     TouchableWithoutFeedback, 
     Keyboard,
-    Button 
+    Button,
+    TextInput,
+    Alert,
 } from 'react-native';
 
-import { CustomText, CustomField, CustomBtn } from '../components';
+import { CustomText, CustomBtn } from '../components';
 import COLORS from '../styles/colors';
-import { TextInput } from 'react-native-gesture-handler';
-
-export const UserSettings = (route) => {
-   
+import { AuthCTX } from "../context/auth";
+import { useNavigation } from "@react-navigation/native";
+export const UserSettings = ({ navigation, route }) => {
+    const { createUser } = useContext(AuthCTX);
     const [fields, setFields] = useState({
-        username: "",
-        imgUrl: "",
-    });
+        username: route.params?.username || "",
+        imgUri: route.params?.imgUri || "",
+      });
+      const navigations = useNavigation();
 
-    const saveBtnHandler =  () => {
-        console.log("username: ", fields.username);
-        console.log("img: ", fields.imgUrl);
-    };
-
-    const fieldChangneHandler = (name, value) => {
+    const handleSave = async () => {
+        const result = await createUser(fields.username);
+        if (result.user) {
+            Alert.alert("created new user");
+        }
+      };
+    
+    const fieldChangeHandler = (name, value) => {
         setFields((fields) => ({
             ...fields,
             [name]: value,
@@ -35,37 +40,33 @@ export const UserSettings = (route) => {
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-            <View style = {styles.header}>
-                <CustomText weight = "medium" style = {styles.headerText}>User Settings</CustomText>
-            </View >
-            <View style={styles.horizontal}>
-                <View style={styles.userField}>
-                    <CustomText weight="medium" style={styles.fieldLabel}>
-                        username
-                    </CustomText>
-                    <TextInput
-                        style={styles.field} 
-                        placeholder="username"
-                        placeholderTextColor={COLORS.black}
-                        value={fields.username}
-                        onChangeText={(val) => fieldChangneHandler("username", val)}
-                    />
-                    <CustomText weight="medium" style={styles.fieldLabel}>
-                        avatar url
-                    </CustomText>
-                    <TextInput
-                        style={styles.field} 
-                        placeholder="https://www.image.com/image.jpg"
-                        placeholderTextColor= {COLORS.black}
-                        value={fields.imgUrl}
-                        onChangeText={(val) => fieldChangneHandler("imgUrl", val)}
-                    />
-                    <CustomBtn 
-                        title="Save Changes" 
-                        style={styles.saveBtn}
-                        onPress={saveBtnHandler}
-                    />
- 
+                <View style = {styles.header}>
+                    <CustomText weight = "medium" style = {styles.headerText}>User Settings</CustomText>
+                </View >
+                <View style={styles.horizontal}>
+                    <View style={styles.userField}>
+                        <CustomText weight="medium" style={styles.fieldLabel}>username</CustomText>
+                        <TextInput
+                            style={styles.field} 
+                            placeholder="username"
+                            placeholderTextColor={COLORS.black}
+                            value={fields.username}
+                            onChangeText={(value) => fieldChangeHandler("username", value)}
+                        />
+                        <CustomText weight="medium" style={styles.fieldLabel}>avatar url</CustomText>
+                        <TextInput
+                            style={styles.field} 
+                            placeholder="https://www.image.com/image.jpg"
+                            placeholderTextColor= {COLORS.black}
+                            value={fields.imgUri}
+                            onChangeText={(value) => fieldChangeHandler("imgUri", value)}
+                        />
+                        <CustomBtn 
+                            style={styles.saveBtn}
+                            name="Save Changes" 
+                            onPress={handleSave}
+                        />
+                    {/* <Button title = "save" onPress={handleSave}/> */}
                     </View>
                 </View>
             </View>
@@ -96,10 +97,6 @@ const styles = StyleSheet.create({
         // marginTop: 22,
       },
     userField: {
-        marginVertical: 22,
-        paddingVertical: 20,
-        borderWidth: 2,
-        borderColor: "white",
         backgroundColor: "white",
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
@@ -108,19 +105,19 @@ const styles = StyleSheet.create({
     },
     fieldLabel: {
         fontSize: 12,
-        paddingVertical: 10,
+        paddingVertical: 17,
         color: COLORS.black,
     },
     field: {
         backgroundColor: COLORS.lightGray,
+        textAlign: "center",
+        width: "90%",
         borderRadius: 40,
         fontSize: 18,
-        paddingVertical: 10,
-        textAlign: "center", 
-        marginBottom: 15,
-        width: "90%",
+        paddingVertical: 12,
     }, 
     saveBtn: {
+        marginTop: 17,
         backgroundColor: COLORS.red, 
     },
     

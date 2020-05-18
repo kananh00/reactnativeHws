@@ -5,36 +5,34 @@ export const AuthCTX = createContext();
 
 export const AuthCTXProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    status: true,
+
     username: "username",
+    imgUri: "https://www.image.com/image.jpg",
   });
 
- 
-
-  const createUser= async (username) => {
+  const createUser = async (username) => {
     try {
-      const isUserExist = await AsyncStorage.getItem(username);
-      
-
       const create = await AsyncStorage.setItem(username);
-     
+      if (create) {
+        return {
+          user: true
+        };
+      }
 
       setAuth((auth) => ({
         ...auth,
-        status: true,
         username,
+        imgUri,
       }));
 
       return {
-        error: false,
+        user: false,
       };
     } catch (e) {
       console.log(e);
     }
   };
 
-
- 
   return (
     <AuthCTX.Provider
       value={{ auth, createUser}}

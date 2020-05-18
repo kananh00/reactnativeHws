@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import store from "./redux";
 import { loadFonts } from "./styles/fonts";
 import { RootDrawer } from "./navigation/RootDrawer";
-// import { AuthCTXProvider } from "./context/auth";
+import { AuthCTXProvider } from "./context/auth";
 export default function App() {
   const [loaded, setLoaded] = useState(false);
 
@@ -22,8 +22,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
-     <RootDrawer />
-      
+      <AuthCTXProvider>
+      <RootDrawer />
+    </AuthCTXProvider>
+
     </Provider>
   );
 }

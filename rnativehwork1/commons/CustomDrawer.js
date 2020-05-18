@@ -6,12 +6,12 @@ import COLORS from '../styles/colors';
 import images from '../styles/images';
 import { CustomText } from '../components/CustomText';
 
-export const CustomDrawer = ({ navigation  }) => {
+export const CustomDrawer = ({ navigation,  auth: { username }  }) => {
     return(
         <View style={styles.container}>
             <View style={styles.user}>
                 <Image style={styles.userImg} source={images.avatar} /> 
-                <CustomText style={styles.username}>username</CustomText>  
+                <CustomText style={styles.username}>{username}</CustomText>  
             </View>  
 
             <View style={styles.drawerButtonWrapper}> 

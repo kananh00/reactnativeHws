@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
@@ -12,21 +12,19 @@ import {
   } from "../screens";
 
 import { CustomDrawer } from '../commons/CustomDrawer';
-// import { CreateStack } from './CreateStack';
-// import { OneTimeStack } from './OneTimeStack';
-// import { MenuHeaderIcon } from '../components';
-
+import { AuthCTX } from "../context/auth";
 export const RootDrawer = () => {
-
+    const { auth } = useContext(AuthCTX);
     const { Navigator, Screen } = createDrawerNavigator();
 
     return(
         <NavigationContainer>
             <Navigator
-                drawerContent={({navigation}) => (
-                    <CustomDrawer navigation={navigation} />
-                )}>
-                    
+        
+        drawerContent={(props) => (
+          <CustomDrawer {...props} auth={auth} />
+        )}
+      >                    
                 <Screen name="OneTimeLists" component={OneTimeLists} />
                 <Screen name="AddNewList" component={AddNewList} />
                 <Screen name="RegularTimeLists" component={RegularTimeLists} />    

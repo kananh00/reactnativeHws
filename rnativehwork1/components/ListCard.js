@@ -13,16 +13,16 @@ import COLORS from '../styles/colors';
 import {CustomText} from '../components/CustomText';
 import {ProductCard} from './';
 
-export const ListCard = ({ list, listID, productID, clickable = true}) => {
+export const ListCard = ({ list,onPress,listName, listID, productID, clickable = true}) => {
   const navigation = useNavigation();
-  const { name, products } = list;
+  const { name, products} = list;
   const productsCount = products.length;
 
   return (
     <TouchableOpacity
-       onPress={() => {
-        navigation.navigate("SingleList", { listID, productID });
-      }}
+       onPress={
+        onPress
+      }
        disabled={!clickable}
     >
 
@@ -31,26 +31,18 @@ export const ListCard = ({ list, listID, productID, clickable = true}) => {
         <View style={styles.row}>
         <CustomText weight = "medium" style={styles.heading}>{name}</CustomText>
         <CustomText weight = "medium" style={styles.count}>{productsCount}/10</CustomText>
-        {/* <TouchableOpacity style={styles.listBtn}>
-          <Image style={styles.listBtnImg}/>
-        </TouchableOpacity> */}
-        
-      </View>
-      
-    
+       
 
-      <FlatList
-        contentContainerStyle={styles.projectsList}
-        data={products}
-        renderItem={({ item }) => (
-          <ProductCard
-            // title = {item.text}
-            // listID={list.id}
-            productID={item.id}
-          />
-        )}
-      />
+
+
+
+      </View>
+      <View style = {styles.percentbar}>
+      <View style = {[styles.productpercent, {maxWidth: 30*productsCount }]}></View>
+      </View>
 </View>
+
+
     </View>
     </TouchableOpacity>
   );
@@ -71,7 +63,8 @@ const styles = StyleSheet.create({
     marginVertical: 13,
   },
   row: {
-    height: 76,
+    // height: 76,
+    marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     paddingRight: 20,
@@ -82,6 +75,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     
+  },
+  productpercent: {
+    borderWidth: 0,
+    borderColor: "white",
+    height: 17,
+    borderColor: "transparent", 
+    backgroundColor: COLORS.yellow,
+    borderRadius: 30,   
+  },
+  percentbar: {
+    marginTop: 10,
+    borderWidth: 0,
+    borderColor: "white",
+    marginVertical: 6,
+    height: 17,
+    marginHorizontal: 20,
+    margin: 20,
+    backgroundColor: COLORS.lightGray,
+    
+    borderRadius: 10,
   },
   count: {
     fontSize: 14,

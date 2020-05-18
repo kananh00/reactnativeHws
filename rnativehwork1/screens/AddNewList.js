@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { 
-    View, 
-    StyleSheet, 
+    View,
+    Text, 
+    StyleSheet,
     TouchableOpacity, 
     TouchableWithoutFeedback,
     Keyboard,
-    Text,
     TextInput
 } from 'react-native';
 
-import COLORS from '../styles/colors';
-import { CustomText, CustomField, CustomBtn } from '../components';
 import { getLists, addList } from '../redux/data';
 import { connect } from 'react-redux';
+import COLORS from '../styles/colors';
+import { CustomText, CustomBtn } from '../components';
+
 
 const mapStateToProps = (state) => ({
     lists: getLists(state),
@@ -20,102 +21,80 @@ const mapStateToProps = (state) => ({
 
 export const AddNewList = connect(mapStateToProps, {
     addList,
-})(({ addList, navigation }) => {
+})(({ navigation, addList}) => {
 
-    const isRegular = status === "regular";
-    const [status, setStatus] = useState("regular");
-
+    const [status, setStatus] = useState("onetime");
     const [fields, setFields] = useState({
-        shopListID: null,
+        shopListID: "",
         name: "",
-        status: "regular",
+        status: "onetime",
     });
 
-    const fieldChangneHandler = (name, value) => {
+    const fieldChangeHandler = (name, value) => {
         setFields((fields) => ({
             ...fields,
             [name]: value,
         }));
     };
 
-    const createListBtnHandler = (status) => {
-
-        const args = {
+    const handleCreate = (status) => {
+        const list_elements = {
             name: fields.name,
             status,
         };
-
-        if(fields.name.trim() !== "") {
-            addList(args);
-            if(args.status === "regular") {
-                navigation.navigate("RegularTimeLists"); 
+        if(fields.name.trim()!=="") {
+            addList(list_elements);
+            if(list_elements.status==="onetime") {
+                navigation.navigate("OneTimeLists"); 
             }
             else {
-                navigation.navigate("OneTimeLists");
+                navigation.navigate("RegularTimeLists");
             }
         }
     };
 
-    
-    
-
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
+
             <View style = {styles.header}>
-          <CustomText weight = "medium" style = {styles.headerText}>New List</CustomText>
-          
-        </View>
-                    <View style={styles.form}>
-                        <CustomText style={styles.listName}>list name</CustomText>
-                        <TextInput style={styles.field} 
-                            placeholder="Something for me"
-                            placeholderTextColor={COLORS.black} 
-                            onChangeText={(val) => fieldChangneHandler("name", val)}
-                            
-                        />
+                <CustomText weight = "medium" style = {styles.headerText}>New List</CustomText>
+            </View>
 
-                        <View style={styles.optionsWrapper}>
-                            <TouchableOpacity 
-                                onPress={() => setStatus("onetime")}
-                                style={[styles.options,
-                                    { backgroundColor: status === "onetime" ?   COLORS.lightGray : "rgba(238, 238, 238, 0.5);" }
-                                ]} 
-                               
-                            >
-                                <Text 
-                                    style={
-                                       [styles.text1, { fontWeight: status === "onetime" ? "bold" : "400" }]
-                                    }
-                                >
-                                    One Time
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                onPress={() => setStatus("regular")}
-                                style={[styles.options,
-                                    { backgroundColor: status === "regular" ?   COLORS.lightGray : "rgba(238, 238, 238, 0.5);" }
-                                ]} 
-                                
-                            >
-                                <Text 
-                                    style={
-                                       [ styles.text1, { fontWeight: status === "regular" ? "bold" : "400" }]
-                                    }
-                                >
-                                    Regular
-                                </Text>
-                            </TouchableOpacity>  
-                        </View>
+                <View style={styles.createListForm}>
+                    <CustomText style={styles.formHeader}>list name</CustomText>
+                    <TextInput style={styles.field} 
+                        onChangeText={(val) => fieldChangeHandler("name", val)}
+                        placeholder="Something for me"
+                        placeholderTextColor={COLORS.black} 
+                    />
 
-                        <CustomBtn 
-                            title="Create List" 
-                            style={styles.crateBtn}
-                            onPress={() => createListBtnHandler(status)}
-                        />
+                    <View style={styles.statusWrap}>
+                        <TouchableOpacity
+                            style={[styles.statusSelection, { backgroundColor: status === "onetime" ? COLORS.lightGray : "rgba(238, 238, 238, 0.5);" }]}
+                            onPress={() => setStatus("onetime")}
+                        >
+                            <Text style={[styles.statusName, { fontWeight: status === "onetime" ? "bold" : "400" }]}>
+                                One Time
+                            </Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity 
+                            style={[styles.statusSelection, { backgroundColor: status === "regular" ? COLORS.lightGray : "rgba(238, 238, 238, 0.5);" }]} 
+                            onPress={() => setStatus("regular")}
+                        >
+                            <Text style={[ styles.statusName, { fontWeight: status === "regular" ? "bold" : "400" }]}>
+                                Regular
+                            </Text>
+                        </TouchableOpacity>  
                     </View>
 
+                    <CustomBtn 
+                        style={styles.btn}
+                        name="Create List" 
+                        onPress={() => handleCreate(status)}
+                    />
+                </View>
             </View>
         </TouchableWithoutFeedback>
     );
@@ -123,8 +102,8 @@ export const AddNewList = connect(mapStateToProps, {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
         flex: 1,
+        backgroundColor: "white",
     },
     headerText: {
         color: "white",
@@ -139,58 +118,47 @@ const styles = StyleSheet.create({
         paddingVertical: 42,
         flexDirection: "row",
         alignItems: "center",
-        
         justifyContent: "space-around",
         paddingRight: 16,
         paddingLeft: 40,
       },
-    title: {
-        fontSize: 18,
-        color: "white",
-        textAlign: "center",
-        paddingVertical: 17,
-    },
-    form: {
-        paddingTop: 10,
-        borderTopStartRadius: 20,
-        borderTopEndRadius: 20,
+    createListForm: {
         backgroundColor: "white",
         alignItems: "center",
-        marginTop: -24,
-        paddingHorizontal: 5,
+        borderTopStartRadius: 30,
+        borderTopEndRadius: 30,
+        marginTop: -20,
     },
-    listName: {
+    formHeader: {
         textAlign: "center",
-        marginHorizontal: 10,
-        paddingBottom: 10,
+        paddingVertical: 15,
     },
-        field: {
-            backgroundColor: COLORS.lightGray,
-            borderRadius: 40,
-            fontSize: 18,
-            paddingVertical: 10,
-            textAlign: "center", 
-            marginBottom: 15,
-            width: "90%",
-
-    }, 
-    optionsWrapper: {
-        flexDirection: "row",
-        width: "90%",
-        justifyContent: "space-between",
-    },
-
-
-    options: {
+    field: {
         backgroundColor: COLORS.lightGray,
-        width: "48%",
-        marginHorizontal: 1,
-        paddingVertical: 13,
-        borderRadius: 45,
-        marginBottom: 15,
-        alignItems: 'center',
+        borderRadius: 40,
+        fontSize: 18,
+        paddingVertical: 12,
+        textAlign: "center", 
+        width: "90%",
+    }, 
+    statusWrap: {
+        flexDirection: "row", 
+        justifyContent: "space-between",
+        width: "90%",
     },
-    crateBtn: {
+    statusSelection: {
+        backgroundColor: COLORS.lightGray,
+        width: "45%",
+        alignItems: 'center',
+        paddingVertical: 15,
+        borderRadius: 40,
+        marginBottom: 17,
+        marginTop: 17,
+    },
+    statusName: {
+        fontSize: 12,
+    },
+    btn: {
         backgroundColor: COLORS.red,
     },
 });

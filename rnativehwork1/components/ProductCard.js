@@ -4,7 +4,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 export const ProductCard = ({
-  title,
+  text,
+  count,
+  unit,
   listID,
   productID,
   clickable = true,
@@ -13,17 +15,11 @@ export const ProductCard = ({
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("SingleList", { listID, productID });
-      }}
-      disabled={!clickable}
     >
-      <View style={[styles.projectCard, style]}>
-        <LinearGradient
-          colors={["transparent", "black"]}
-          style={styles.projectCardGradient}
-        />
-        <Text style={styles.projectCardName}>{title}</Text>
+      <View style={styles.productCard}>
+        <Text style={styles.productName}>{text}</Text>
+        <Text style={styles.productCount}>{count}</Text>
+        <Text style={styles.productUnit}>{unit}</Text>
       </View>
     </TouchableOpacity>
   );

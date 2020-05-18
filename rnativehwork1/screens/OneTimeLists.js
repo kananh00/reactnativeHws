@@ -33,7 +33,8 @@ export const OneTimeLists = connect(mapStateToProps)((props) => {
           {lists
           .filter((list) => list.status === "onetime")
           .map((list) => (
-            <ListCard key={list.id} list={list} />
+            <ListCard key={list.id} list={list} listName = {list.name} listID = {list.id} onPress ={() => 
+              navigations.navigate("SingleList", {name: list.name, listID: list.id})} />
           ))}
         </View>
       </ScrollView>
