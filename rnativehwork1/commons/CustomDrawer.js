@@ -14,35 +14,27 @@ export const CustomDrawer = ({ navigation,  auth: { username }  }) => {
                 <CustomText style={styles.username}>{username}</CustomText>  
             </View>  
 
-            <View style={styles.drawerButtonWrapper}> 
+            <View style={styles.drawerBtnWrapper}> 
                 <TouchableOpacity 
-                    style={[styles.drawerBtn, styles.drawerFirstBtn]} 
+                    style={[styles.btn, styles.topBtn]} 
                     onPress={() => navigation.navigate("AddNewList", {})}>
-                    <CustomText weight = "bold" style={styles.drawerBtnLabel}>
-                        Add New List
-                    </CustomText>
+                    <CustomText weight = "bold" style={styles.btnLabel}>Add New List</CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={styles.drawerBtn} 
+                    style={styles.btn} 
                     onPress={() => navigation.navigate("OneTimeLists", {})}>
-                    <CustomText weight = "bold" style={styles.drawerBtnLabel}>
-                        One Time List
-                    </CustomText>
+                    <CustomText weight = "bold" style={styles.btnLabel}>One Time List</CustomText>
                 </TouchableOpacity>
                    
                 <TouchableOpacity 
-                    style={styles.drawerBtn} 
+                    style={styles.btn} 
                     onPress={() => navigation.navigate("RegularTimeLists", {})}>
-                    <CustomText weight = "bold" style={styles.drawerBtnLabel}>
-                        Regular List
-                    </CustomText>
+                    <CustomText weight = "bold" style={styles.btnLabel}>Regular List</CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={styles.drawerBtn} 
+                    style={styles.btn} 
                     onPress={() => navigation.navigate("UserSettings")}>
-                    <CustomText weight = "bold" style={styles.drawerBtnLabel}>
-                        User Settings
-                    </CustomText>
+                    <CustomText weight = "bold" style={styles.btnLabel}>User Settings</CustomText>
                 </TouchableOpacity>
             </View>
         </View>
@@ -71,7 +63,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: COLORS.red,
     },
-    drawerButtonWrapper: {
+    drawerBtnWrapper: {
         flex: 1,
         backgroundColor: COLORS.red,
         borderTopStartRadius: 30,
@@ -79,7 +71,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
         overflow: "hidden",
     },
-    drawerBtn: {  
+    btn: {  
         marginTop: 10,
         paddingHorizontal: 20,
         borderWidth: 2,
@@ -89,11 +81,11 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 30,   
     },
-    drawerFirstBtn: { 
+    topBtn: { 
         marginBottom: 25, 
         marginTop: 16, 
     },
-    drawerBtnLabel: {
+    btnLabel: {
         textAlign: "center",
         backgroundColor: "white",
         textTransform: "uppercase",
