@@ -30,6 +30,7 @@ export const RootDrawer = () => {
                 <Screen name="RegularTimeLists" component={RegularTimeLists} />    
                 <Screen name="UserSettings" component={UserSettings} />
                 <Screen name="SingleList" component={SingleList} />
+                <Screen name="SingleListEdit" component={SingleListEdit} />
             </Navigator>
         </NavigationContainer>
     );

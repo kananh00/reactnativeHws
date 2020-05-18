@@ -33,7 +33,7 @@ export const SingleList = connect(mapStateToProps)((props) => {
       <View style = {styles.header}>
       <MaterialIcons onPress = {navigations.goBack} name="arrow-back" size={24} color="white" />
       <CustomText weight = "medium" style = {styles.headerText}>{name}</CustomText>
-      <MaterialIcons name="edit" size={24} color="white" />
+      <MaterialIcons onPress = {() => navigations.navigate("SingleListEdit", {name, listID})} name="edit" size={24} color="white" />
         </View>
       <View style={styles.productContent}>
         <TouchableOpacity style={styles.resetBtn}>

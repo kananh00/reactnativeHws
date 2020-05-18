@@ -1,16 +1,9 @@
-// ACTION TYPES
 const ADD_LIST = "ADD_LIST";
-// const ADD_PROJECT = "ADD_PROJECT";
-// const ADD_TODO = "ADD_TODO";
-// const UPDATE_TODO = "UPDATE_TODO";
-// const DELETE_TODO = "DELETE_TODO";
 const TOGGLE_PRODUCT = "TOGGLE_PRODUCT";
 
-// SELECTORS
+
 const MODULE_NAME = "data";
 export const getLists = (state) => state[MODULE_NAME].lists;
-// export const getProducts = (state) => state[MODULE_NAME].products;
-// REDUCER
 
 const initialState = {
   lists: [
@@ -96,27 +89,6 @@ const initialState = {
                           ],
                 },
                 
-            
-      
-
-
-
-    // {
-    //   id: createID(),
-    //   name: "Second section",
-    //   projects: [
-    //     {
-    //       id: createID(),
-    //       name: "Other",
-    //       imgUri:
-    //         "https://images.unsplash.com/photo-1588707611794-49836ece1f53?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-    //       todos: [
-    //         { id: createID(), text: "Sample text", done: false },
-    //         { id: createID(), text: "Sample text", done: false },
-    //       ],
-    //     },
-    //   ],
-    // },
   ],
 };
 
@@ -135,27 +107,7 @@ export function dataReducer(state = initialState, { type, payload }) {
           },
         ],
       };
-    // case ADD_PROJECT:
-    //   return {
-    //     ...state,
-    //     lists: state.lists.map((section) => {
-    //       if (section.id === payload.sectionID) {
-    //         return {
-    //           ...section,
-    //           projects: [
-    //             ...section.projects,
-    //             {
-    //               id: createID(),
-    //               name: payload.name,
-    //               imgUri: payload.imgUri,
-    //               todos: [],
-    //             },
-    //           ],
-    //         };
-    //       }
-    //       return section;
-    //     }),
-    //   };
+   
     case TOGGLE_PRODUCT:
       return {
         ...state,
@@ -178,113 +130,19 @@ export function dataReducer(state = initialState, { type, payload }) {
           return list;
         }),
       };
-    // case UPDATE_TODO:
-    //   return {
-    //     ...state,
-    //     lists: state.lists.map((section) => {
-    //       if (section.id === payload.sectionID) {
-    //         return {
-    //           ...section,
-    //           projects: section.projects.map((project) => {
-    //             if (project.id === payload.projectID) {
-    //               return {
-    //                 ...project,
-    //                 todos: project.todos.map((todo) => {
-    //                   if (todo.id === payload.todoID) {
-    //                     return {
-    //                       ...todo,
-    //                       text: payload.todoText,
-    //                     };
-    //                   }
-    //                   return todo;
-    //                 }),
-    //               };
-    //             }
-    //             return project;
-    //           }),
-    //         };
-    //       }
-    //       return section;
-    //     }),
-    //   };
-    // case ADD_TODO:
-    //   return {
-    //     ...state,
-    //     lists: state.lists.map((section) => {
-    //       if (section.id === payload.sectionID) {
-    //         return {
-    //           ...section,
-    //           projects: section.projects.map((project) => {
-    //             if (project.id === payload.projectID) {
-    //               return {
-    //                 ...project,
-    //                 todos: [
-    //                   {
-    //                     id: createID(),
-    //                     text: payload.todoText,
-    //                     done: false,
-    //                   },
-    //                   ...project.todos,
-    //                 ],
-    //               };
-    //             }
-    //             return project;
-    //           }),
-    //         };
-    //       }
-    //       return section;
-    //     }),
-    //   };
-    // case DELETE_TODO:
-    //   return {
-    //     ...state,
-    //     lists: state.lists.map((section) => {
-    //       if (section.id === payload.sectionID) {
-    //         return {
-    //           ...section,
-    //           projects: section.projects.map((project) => {
-    //             if (project.id === payload.projectID) {
-    //               return {
-    //                 ...project,
-    //                 todos: project.todos.filter(
-    //                   (todo) => todo.id !== payload.todoID
-    //                 ),
-    //               };
-    //             }
-    //             return project;
-    //           }),
-    //         };
-    //       }
-    //       return section;
-    //     }),
-    //   };
+  
     default:
       return state;
   }
 }
 
-// ACTION CREATORS
+
 
 export const addList = (payload) => ({
   type: ADD_LIST,
   payload,
 });
-// export const addProject = (payload) => ({
-//   type: ADD_PROJECT,
-//   payload,
-// });
-// export const addTodo = (payload) => ({
-//   type: ADD_TODO,
-//   payload,
-// });
-// export const deleteTodo = (payload) => ({
-//   type: DELETE_TODO,
-//   payload,
-// });
-// export const updateTodo = (payload) => ({
-//   type: UPDATE_TODO,
-//   payload,
-// });
+
 export const toggleProduct= (payload) => ({
   type: TOGGLE_PRODUCT,
   payload,

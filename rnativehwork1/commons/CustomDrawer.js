@@ -17,18 +17,18 @@ export const CustomDrawer = ({ navigation,  auth: { username }  }) => {
             <View style={styles.drawerBtnWrapper}> 
                 <TouchableOpacity 
                     style={[styles.btn, styles.topBtn]} 
-                    onPress={() => navigation.navigate("AddNewList", {})}>
+                    onPress={() => navigation.navigate("AddNewList")}>
                     <CustomText weight = "bold" style={styles.btnLabel}>Add New List</CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.btn} 
-                    onPress={() => navigation.navigate("OneTimeLists", {})}>
+                    onPress={() => navigation.navigate("OneTimeLists")}>
                     <CustomText weight = "bold" style={styles.btnLabel}>One Time List</CustomText>
                 </TouchableOpacity>
                    
                 <TouchableOpacity 
                     style={styles.btn} 
-                    onPress={() => navigation.navigate("RegularTimeLists", {})}>
+                    onPress={() => navigation.navigate("RegularTimeLists")}>
                     <CustomText weight = "bold" style={styles.btnLabel}>Regular List</CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity 
